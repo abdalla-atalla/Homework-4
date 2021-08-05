@@ -1,4 +1,4 @@
-package edu.miracosta.cs113;
+package test.edu.miracosta.cs113;
 
 import java.util.AbstractSequentialList;
 
@@ -12,6 +12,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E> { // Data fie
 	private Node<E> tail = null; // points to the tail of the list
 	private int size = 0; // the number of items in the list
 
+	// inserts element
 	public void add(int index, E obj) {
 		listIterator(index).add(obj);
 	}
@@ -22,7 +23,8 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E> { // Data fie
 		head.prev = firstNode;
 		head = firstNode;
 		size++;
-	}
+	}//inserts to the front
+	//puts the next to head and the current head.prev will be the node and then the head becomes that node, then increase size of that list
 
 	public void addLast(E obj) {
 		Node<E> lastNode = new Node<>(obj);
@@ -30,7 +32,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E> { // Data fie
 		tail.next = lastNode;
 		tail = lastNode;
 		size++;
-	}
+	} //puts the element into the last spot in the list
 
 	public E get(int index) {
 		if (index < 0 || index >= size) {
@@ -38,15 +40,15 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E> { // Data fie
 		}
 		ListIterator<E> iter = listIterator(index);
 		return iter.next();
-	}
+	}// check the index because test case will throw negative index or one that is out ofbounds but the wrong exception will be thrown, NoSuch
 
 	public E getFirst() {
 		return head.data;
-	}
+	}//head of data retrieved
 
 	public E getLast() {
 		return tail.data;
-	}
+	}//tail of data
 
 	public int size() {
 		return size;
@@ -123,21 +125,21 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E> { // Data fie
 
 		public boolean hasNext() {
 			return nextItem != null;
-		}
+		} // true if there is a next item, more elements when traversing forward
 
 		public boolean hasPrevious() {
 			if (size == 0)
 				return false;
 			return (nextItem == null && size != 0) || nextItem.prev != null;
-		}
+		}// true if there is a prev item, more elements when traversing backwards
 
 		public int previousIndex() {
 			return index - 1;
-		}
+		}// returns index of the previous() element
 
 		public int nextIndex() {
 			return index;
-		}
+		}// returns index of the next() element
 
 		public void set(E o) {
 			if (lastItemReturned != null) {
@@ -145,7 +147,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E> { // Data fie
 			} else {
 				throw new IllegalStateException();
 			}
-		}
+		} // Replaces last element returned by next() / previous() with the element
 
 		public void remove() {
 			if (lastItemReturned == null) {
@@ -159,7 +161,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E> { // Data fie
 				head = nextItem;
 				head.prev = null;
 
-			} else if (lastItemReturned == tail) {
+			} else if (lastItemReturned == tail) {// to remove the tail
 				lastItemReturned.prev.next = null;
 				tail = lastItemReturned.prev;
 				tail.next = null;
@@ -170,7 +172,8 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E> { // Data fie
 			}
 			size--;
 			index--;
-		}
+		}// Removes from the list the last element that was returned by next() or
+			// previous()
 
 		public E next() {
 			if (!hasNext()) {
@@ -184,7 +187,7 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E> { // Data fie
 				index++;
 				return lastItemReturned.data;
 			}
-		}
+		}// Returns the next element in the list and advances the cursor position.
 
 		public E previous() {
 			if (!hasPrevious()) {
@@ -198,7 +201,8 @@ public class DoubleLinkedList<E> extends AbstractSequentialList<E> { // Data fie
 			lastItemReturned = nextItem;
 			index--;
 			return lastItemReturned.data;
-		}
+		}// Returns the previous element in the list and moves the cursor position
+			// backwards.
 
 		public void add(E obj) {
 
